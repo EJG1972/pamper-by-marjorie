@@ -1127,57 +1127,78 @@
       font-weight: 500;
     }
 
+    /* Mobile Order Now button — hidden on desktop */
+    .nav-mobile-cta { display: none; }
+
     /* ── MOBILE ── */
     @media (max-width: 768px) {
 
-      /* Nav — hide links, keep logo + order button */
+      /* Nav — logo on left, Order Now on right, everything else hidden */
+      nav { padding: 0 5%; height: 62px; }
       .nav-links { display: none; }
-      .cart-nav-btn { display: none; }
-      nav { padding: 0 4%; height: 60px; }
-      .nav-logo { font-size: 1.1rem; }
+      .nav-logo { font-size: 1.05rem; }
+      .nav-mobile-cta {
+        display: inline-block;
+        background: var(--bark);
+        color: #fff;
+        padding: 0.5rem 1.2rem;
+        border-radius: 50px;
+        text-decoration: none;
+        font-size: 0.75rem;
+        font-weight: 600;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        white-space: nowrap;
+      }
 
-      /* Hero — stack photo below text */
-      .hero { padding: 40px 5% 50px; margin-top: 60px; min-height: auto; }
+      /* Hero — photo on top, text below, centred */
+      .hero { padding: 30px 5% 50px; margin-top: 62px; min-height: auto; }
       .hero-inner {
         grid-template-columns: 1fr;
-        gap: 2rem;
+        gap: 1.8rem;
         text-align: center;
       }
       .hero-text { text-align: center; }
-      .hero-sub { margin-left: auto; margin-right: auto; }
+      .hero-sub { margin-left: auto; margin-right: auto; max-width: 100%; }
       .hero-badges { justify-content: center; }
-      .hero-buttons { justify-content: center; }
+      .hero-buttons { justify-content: center; flex-direction: column; align-items: center; }
+      .hero-buttons .btn-whatsapp,
+      .hero-buttons .btn-outline { width: 100%; max-width: 280px; justify-content: center; text-align: center; }
+
+      /* Photo — full width, natural shape, no cropping */
       .hero-photo-wrap { order: -1; }
       .photo-frame {
-        width: 240px;
-        height: 290px;
+        width: 200px;
+        height: 200px;
+        border-radius: 50%;
         margin: 0 auto;
       }
+      .photo-frame img { object-position: center 15%; }
 
-      /* Trust strip — tighter spacing */
-      .trust-strip { gap: 1.5rem; padding: 1.4rem 5%; }
+      /* Trust strip */
+      .trust-strip { gap: 1.2rem; padding: 1.2rem 5%; }
+      .trust-item { font-size: 0.65rem; }
 
       /* Brand statement */
-      .brand-statement { padding: 40px 5%; }
+      .brand-statement { padding: 36px 5%; }
 
       /* Products */
-      .products { padding: 50px 5%; }
-      .products-grid { grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 1rem; }
-      .product-img { height: 180px; }
+      .products { padding: 44px 5%; }
+      .products-grid { grid-template-columns: repeat(2, 1fr); gap: 0.9rem; }
+      .product-img { height: 160px; }
+      .product-info { padding: 0.9rem; }
+      .product-name { font-size: 1rem; }
+      .product-desc { font-size: 0.72rem; }
 
-      /* Order section */
-      .order-section { padding: 50px 5%; }
+      /* Order steps */
+      .order-section { padding: 44px 5%; }
       .order-steps { grid-template-columns: 1fr; gap: 1rem; }
 
       /* Contact */
-      .contact-section { padding: 50px 5%; }
+      .contact-section { padding: 44px 5%; }
       .contact-cards { grid-template-columns: 1fr 1fr; gap: 1rem; }
 
-      /* Buttons full-width on small screens */
-      .hero-buttons .btn-primary,
-      .hero-buttons .btn-whatsapp { width: 100%; justify-content: center; text-align: center; }
-
-      /* WhatsApp float — slightly smaller */
+      /* WhatsApp float */
       .whatsapp-btn { width: 50px; height: 50px; bottom: 1.2rem; right: 1.2rem; }
       .whatsapp-btn svg { width: 26px; height: 26px; }
     }
@@ -1213,6 +1234,7 @@
       </li>
       <li><a href="https://wa.me/27818004197" target="_blank" class="nav-cta">Order Now</a></li>
     </ul>
+    <a href="https://wa.me/27818004197" target="_blank" class="nav-mobile-cta">Order Now</a>
   </nav>
 
   <!-- Hero -->
