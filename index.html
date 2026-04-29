@@ -1126,6 +1126,61 @@
       display: none;
       font-weight: 500;
     }
+
+    /* ── MOBILE ── */
+    @media (max-width: 768px) {
+
+      /* Nav — hide links, keep logo + order button */
+      .nav-links { display: none; }
+      .cart-nav-btn { display: none; }
+      nav { padding: 0 4%; height: 60px; }
+      .nav-logo { font-size: 1.1rem; }
+
+      /* Hero — stack photo below text */
+      .hero { padding: 40px 5% 50px; margin-top: 60px; min-height: auto; }
+      .hero-inner {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+        text-align: center;
+      }
+      .hero-text { text-align: center; }
+      .hero-sub { margin-left: auto; margin-right: auto; }
+      .hero-badges { justify-content: center; }
+      .hero-buttons { justify-content: center; }
+      .hero-photo-wrap { order: -1; }
+      .photo-frame {
+        width: 240px;
+        height: 290px;
+        margin: 0 auto;
+      }
+
+      /* Trust strip — tighter spacing */
+      .trust-strip { gap: 1.5rem; padding: 1.4rem 5%; }
+
+      /* Brand statement */
+      .brand-statement { padding: 40px 5%; }
+
+      /* Products */
+      .products { padding: 50px 5%; }
+      .products-grid { grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 1rem; }
+      .product-img { height: 180px; }
+
+      /* Order section */
+      .order-section { padding: 50px 5%; }
+      .order-steps { grid-template-columns: 1fr; gap: 1rem; }
+
+      /* Contact */
+      .contact-section { padding: 50px 5%; }
+      .contact-cards { grid-template-columns: 1fr 1fr; gap: 1rem; }
+
+      /* Buttons full-width on small screens */
+      .hero-buttons .btn-primary,
+      .hero-buttons .btn-whatsapp { width: 100%; justify-content: center; text-align: center; }
+
+      /* WhatsApp float — slightly smaller */
+      .whatsapp-btn { width: 50px; height: 50px; bottom: 1.2rem; right: 1.2rem; }
+      .whatsapp-btn svg { width: 26px; height: 26px; }
+    }
   </style>
 </head>
 <body>
