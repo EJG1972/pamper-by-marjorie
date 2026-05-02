@@ -1096,6 +1096,86 @@
       font-weight: 300;
     }
 
+    /* ── CART FORM ── */
+    .cart-form {
+      margin-bottom: 1rem;
+      padding-bottom: 1rem;
+      border-bottom: 1px solid var(--sand);
+      display: none;
+    }
+
+    .cart-form-label {
+      font-size: 0.65rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--rose);
+      font-weight: 600;
+      margin-bottom: 0.6rem;
+      margin-top: 0.8rem;
+      display: block;
+    }
+
+    .cart-input {
+      width: 100%;
+      border: 1.5px solid var(--sand);
+      border-radius: 10px;
+      padding: 0.65rem 0.9rem;
+      font-family: 'Montserrat', sans-serif;
+      font-size: 0.82rem;
+      color: var(--text);
+      background: #fff;
+      margin-bottom: 0.6rem;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+
+    .cart-input:focus { border-color: var(--bark); }
+    .cart-input::placeholder { color: var(--text-light); opacity: 0.7; }
+
+    .cart-radio-group { display: flex; flex-direction: column; gap: 0.5rem; margin-bottom: 0.6rem; }
+
+    .cart-radio {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.82rem;
+      color: var(--text);
+      cursor: pointer;
+    }
+
+    .cart-radio input[type="radio"] { accent-color: var(--bark); width: 16px; height: 16px; }
+
+    .cart-delivery-info {
+      font-size: 0.72rem;
+      color: var(--bark);
+      background: rgba(139,58,88,0.08);
+      border-radius: 8px;
+      padding: 0.5rem 0.8rem;
+      margin-top: 0.4rem;
+      line-height: 1.6;
+    }
+
+    .btn-email {
+      background: #3A2028;
+      color: #fff;
+      border-radius: 50px;
+      text-decoration: none;
+      font-size: 0.85rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      font-weight: 600;
+      transition: all 0.25s;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      width: 100%;
+      padding: 1rem;
+      margin-top: 0.6rem;
+    }
+
+    .btn-email:hover { background: var(--bark); }
+
     /* Added toast notification */
     .added-notif {
       position: fixed;
@@ -1702,15 +1782,44 @@
       </div>
     </div>
     <div class="cart-footer">
+
+      <div class="cart-form" id="cartForm">
+        <span class="cart-form-label">Your Details</span>
+        <input type="text" id="custName" placeholder="Your name *" class="cart-input"/>
+        <input type="tel" id="custPhone" placeholder="Your WhatsApp / phone number *" class="cart-input"/>
+
+        <span class="cart-form-label">Delivery</span>
+        <div class="cart-radio-group">
+          <label class="cart-radio">
+            <input type="radio" name="delivery" value="collect" checked onchange="toggleDelivery()"/>
+            I'll collect from Marjorie
+          </label>
+          <label class="cart-radio">
+            <input type="radio" name="delivery" value="delivery" onchange="toggleDelivery()"/>
+            I need delivery
+          </label>
+        </div>
+        <div id="deliverySection" style="display:none;">
+          <input type="text" id="custAddress" placeholder="Your delivery address" class="cart-input"/>
+          <div class="cart-delivery-info">⚠️ Delivery is an extra cost. Marjorie will confirm the delivery fee with you directly.</div>
+        </div>
+      </div>
+
       <div class="cart-total-row">
         <span class="cart-total-label">Estimated Total</span>
         <span class="cart-total-amount" id="cartTotal">R0</span>
       </div>
-      <a id="cartSendBtn" href="#" target="_blank" class="btn-whatsapp cart-send-btn">
+
+      <a id="cartSendBtn" href="#" onclick="sendViaWhatsApp(event)" class="btn-whatsapp cart-send-btn">
         <svg viewBox="0 0 24 24" width="18" height="18" fill="#fff"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
-        Send Order to Marjorie
+        Send via WhatsApp
       </a>
-      <p class="cart-note">Marjorie will confirm availability, final price & delivery.</p>
+
+      <a id="cartEmailBtn" href="#" onclick="sendViaEmail(event)" class="btn-email">
+        ✉️ Send via Email
+      </a>
+
+      <p class="cart-note">Choose how to send your order. Marjorie will confirm availability, final price & delivery.</p>
     </div>
   </div>
 
@@ -1877,10 +1986,14 @@
         container.innerHTML = `<div class="cart-empty"><div class="cart-empty-icon">🛍️</div><p>Your order list is empty.<br/>Browse the products and click<br/><strong>+ Add to Order</strong> on any item.</p></div>`;
         totalEl.textContent = 'R0';
         sendBtn.style.display = 'none';
+        document.getElementById('cartEmailBtn').style.display = 'none';
+        document.getElementById('cartForm').style.display = 'none';
         return;
       }
 
       sendBtn.style.display = 'flex';
+      document.getElementById('cartEmailBtn').style.display = 'flex';
+      document.getElementById('cartForm').style.display = 'block';
       let total = 0;
       let html = '';
 
@@ -1907,15 +2020,66 @@
 
       container.innerHTML = html;
       totalEl.textContent = `R${total}`;
+    }
 
-      let msg = 'Hi Marjorie! I would like to place the following order:\n\n';
+    function buildOrderMessage() {
+      const name = document.getElementById('custName').value.trim();
+      const phone = document.getElementById('custPhone').value.trim();
+      const deliveryType = document.querySelector('input[name="delivery"]:checked').value;
+      const address = document.getElementById('custAddress').value.trim();
+
+      if (!name || !phone) {
+        alert('Please fill in your name and phone number before sending your order.');
+        return null;
+      }
+      if (deliveryType === 'delivery' && !address) {
+        alert('Please fill in your delivery address.');
+        return null;
+      }
+
+      let total = 0;
+      cart.forEach(item => { total += parsePrice(item.price) * item.qty; });
+
+      let msg = `Hi Marjorie! 😊\n\nI would like to place the following order:\n\n`;
+      msg += `MY DETAILS\n`;
+      msg += `Name: ${name}\n`;
+      msg += `Phone: ${phone}\n`;
+      if (deliveryType === 'delivery') {
+        msg += `Delivery address: ${address}\n`;
+        msg += `Delivery: Yes please — please confirm the delivery fee\n`;
+      } else {
+        msg += `Delivery: I will collect from you\n`;
+      }
+      msg += `\nMY ORDER\n`;
       cart.forEach(item => {
         msg += `• ${item.qty}x ${item.name}`;
         if (item.fragrance) msg += ` (${item.fragrance})`;
         msg += ` — ${item.price}\n`;
       });
-      msg += `\nEstimated total: R${total}\n\nPlease confirm availability and let me know how to pay and arrange delivery. Thank you! 😊`;
-      sendBtn.href = `https://wa.me/27614222927?text=${encodeURIComponent(msg)}`;
+      msg += `\nEstimated Total: R${total}`;
+      if (deliveryType === 'delivery') msg += ` (+ delivery fee to be confirmed)`;
+      msg += `\n\nThank you! 🌸`;
+      return msg;
+    }
+
+    function sendViaWhatsApp(e) {
+      e.preventDefault();
+      const msg = buildOrderMessage();
+      if (!msg) return;
+      window.open(`https://wa.me/27614222927?text=${encodeURIComponent(msg)}`, '_blank');
+    }
+
+    function sendViaEmail(e) {
+      e.preventDefault();
+      const msg = buildOrderMessage();
+      if (!msg) return;
+      const subject = encodeURIComponent('New Order — Pamper by Marjorie');
+      window.location.href = `mailto:mojavdmerwe@gmail.com?subject=${subject}&body=${encodeURIComponent(msg)}`;
+    }
+
+    function toggleDelivery() {
+      const deliveryType = document.querySelector('input[name="delivery"]:checked').value;
+      document.getElementById('deliverySection').style.display = deliveryType === 'delivery' ? 'block' : 'none';
     }
 
     function updateCartBadge() {
