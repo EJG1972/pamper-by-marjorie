@@ -2099,7 +2099,7 @@
       let total = 0;
       cart.forEach(item => { total += parsePrice(item.price) * item.qty; });
 
-      let msg = `Hi Marjorie! 😊\n\nI would like to place the following order:\n\n`;
+      let msg = `Hi Marjorie!\n\nI would like to place the following order:\n\n`;
       msg += `MY DETAILS\n`;
       msg += `Name: ${name}\n`;
       msg += `Phone: ${phone}\n`;
@@ -2118,7 +2118,7 @@
       });
       msg += `\nEstimated Total: R${total}`;
       if (deliveryType === 'delivery') msg += ` (+ delivery fee to be confirmed)`;
-      msg += `\n\nThank you! 🌸`;
+      msg += `\n\nThank you!`;
       return msg;
     }
 
