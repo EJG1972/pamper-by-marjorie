@@ -1096,6 +1096,25 @@
       font-weight: 300;
     }
 
+    .btn-continue-shopping {
+      display: block;
+      text-align: center;
+      font-size: 0.78rem;
+      font-weight: 600;
+      color: var(--bark);
+      letter-spacing: 0.05em;
+      text-decoration: none;
+      padding: 0.6rem;
+      border: 1.5px solid var(--blush);
+      border-radius: 50px;
+      margin-top: 0.8rem;
+      transition: background 0.2s, color 0.2s;
+    }
+    .btn-continue-shopping:hover {
+      background: var(--blush);
+      color: var(--bark);
+    }
+
     /* ── CART FORM ── */
     .cart-form {
       margin-bottom: 1rem;
@@ -1312,9 +1331,9 @@
           <span class="cart-badge" id="cartBadge">0</span>
         </button>
       </li>
-      <li><a href="https://wa.me/27614222927" target="_blank" class="nav-cta">Order Now</a></li>
+      <li><a href="#products" class="nav-cta">Order Now</a></li>
     </ul>
-    <a href="https://wa.me/27614222927" target="_blank" class="nav-mobile-cta">Order Now</a>
+    <a href="#products" class="nav-mobile-cta">Order Now</a>
   </nav>
 
   <!-- Hero -->
@@ -1818,6 +1837,8 @@
       <a id="cartEmailBtn" href="#" onclick="sendViaEmail(event)" class="btn-email">
         ✉️ Send via Email
       </a>
+
+      <a href="#products" onclick="closeCart()" class="btn-continue-shopping">← Add More Products</a>
 
       <p class="cart-note">Choose how to send your order. Marjorie will confirm availability, final price & delivery.</p>
     </div>
