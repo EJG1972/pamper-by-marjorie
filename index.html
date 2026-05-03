@@ -1110,10 +1110,12 @@
       margin-top: 0.8rem;
       transition: background 0.2s, color 0.2s;
     }
-    .btn-continue-shopping:hover {
-      background: var(--blush);
-      color: var(--bark);
-    }
+    .btn-continue-shopping:hover { background: var(--blush); color: var(--bark); }
+
+    /* Mobile two-step cart — hidden on desktop */
+    .cart-step-1 { display: none; }
+    .cart-back-link { display: none; }
+    .cart-place-order-btn { display: none; }
 
     /* ── CART FORM ── */
     .cart-form {
@@ -1336,11 +1338,7 @@
       .cart-drawer { width: 100vw; }
       .cart-item { gap: 1rem; padding: 1.2rem 0; }
       .cart-item-img { width: 80px; height: 80px; border-radius: 14px; }
-      .cart-item-name {
-        font-size: 1.15rem;
-        white-space: normal;
-        line-height: 1.3;
-      }
+      .cart-item-name { font-size: 1.15rem; white-space: normal; line-height: 1.3; }
       .cart-item-fragrance { font-size: 0.78rem; }
       .cart-item-price { font-size: 0.9rem; }
       .qty-btn { width: 32px; height: 32px; font-size: 1.1rem; }
@@ -1349,6 +1347,44 @@
       .cart-footer { padding: 1rem 1.5rem 1.5rem; }
       .cart-total-amount { font-size: 1.7rem; }
       .cart-send-btn { font-size: 0.95rem; padding: 1.1rem; }
+
+      /* Two-step cart on mobile */
+      .cart-step-1 { display: block; }
+      #cartForm { display: none !important; }
+      #cartTotalRow { display: none; }
+      #cartSendBtn { display: none !important; }
+      #cartEmailBtn { display: none !important; }
+      .cart-note { display: none; }
+      .cart-drawer.order-step #cartForm { display: block !important; }
+      .cart-drawer.order-step #cartTotalRow { display: flex; }
+      .cart-drawer.order-step #cartSendBtn { display: flex !important; }
+      .cart-drawer.order-step #cartEmailBtn { display: flex !important; }
+      .cart-drawer.order-step .cart-note { display: block; }
+      .cart-drawer.order-step .cart-step-1 { display: none; }
+      .cart-back-link {
+        display: block;
+        font-size: 0.8rem;
+        color: var(--rose);
+        text-decoration: none;
+        font-weight: 600;
+        margin-bottom: 1rem;
+      }
+      .cart-place-order-btn {
+        display: block;
+        width: 100%;
+        background: var(--bark);
+        color: #fff;
+        border: none;
+        padding: 1rem;
+        border-radius: 50px;
+        font-family: 'Montserrat', sans-serif;
+        font-size: 0.9rem;
+        font-weight: 600;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        cursor: pointer;
+        margin-bottom: 0.5rem;
+      }
     }
   </style>
 </head>
@@ -1856,7 +1892,18 @@
     </div>
     <div class="cart-footer">
 
+      <!-- Mobile step 1: compact footer with total + Place Order button -->
+      <div class="cart-step-1" id="cartStep1">
+        <div class="cart-total-row" style="margin-bottom:0.8rem;">
+          <span class="cart-total-label">Estimated Total</span>
+          <span class="cart-total-amount" id="cartTotalStep1">R0</span>
+        </div>
+        <button class="cart-place-order-btn" onclick="showOrderForm()">Place my order →</button>
+        <a href="#products" onclick="closeCart()" class="btn-continue-shopping">← Add More Products</a>
+      </div>
+
       <div class="cart-form" id="cartForm">
+        <a href="#" class="cart-back-link" onclick="hideOrderForm(event)">← Back to my products</a>
         <span class="cart-form-label">Your Details</span>
         <input type="text" id="custName" placeholder="Your name *" class="cart-input"/>
         <input type="tel" id="custPhone" placeholder="Your WhatsApp / phone number *" class="cart-input"/>
@@ -1878,7 +1925,7 @@
         </div>
       </div>
 
-      <div class="cart-total-row">
+      <div class="cart-total-row" id="cartTotalRow">
         <span class="cart-total-label">Estimated Total</span>
         <span class="cart-total-amount" id="cartTotal">R0</span>
       </div>
@@ -1891,8 +1938,6 @@
       <a id="cartEmailBtn" href="#" onclick="sendViaEmail(event)" class="btn-email">
         ✉️ Send via Email
       </a>
-
-      <a href="#products" onclick="closeCart()" class="btn-continue-shopping">← Add More Products</a>
 
       <p class="cart-note">Choose how to send your order. Marjorie will confirm availability, final price & delivery.</p>
     </div>
@@ -2133,6 +2178,17 @@
 
       container.innerHTML = html;
       totalEl.textContent = `R${total}`;
+      const step1Total = document.getElementById('cartTotalStep1');
+      if (step1Total) step1Total.textContent = `R${total}`;
+    }
+
+    function showOrderForm() {
+      document.getElementById('cartDrawer').classList.add('order-step');
+    }
+
+    function hideOrderForm(e) {
+      e.preventDefault();
+      document.getElementById('cartDrawer').classList.remove('order-step');
     }
 
     function buildOrderMessage() {
@@ -2212,7 +2268,9 @@
 
     function closeCart() {
       document.getElementById('cartOverlay').classList.remove('open');
-      document.getElementById('cartDrawer').classList.remove('open');
+      const drawer = document.getElementById('cartDrawer');
+      drawer.classList.remove('open');
+      drawer.classList.remove('order-step');
       document.body.style.overflow = '';
     }
 
