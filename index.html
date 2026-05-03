@@ -1226,8 +1226,21 @@
       font-weight: 500;
     }
 
-    /* Mobile Order Now button — hidden on desktop */
+    /* Mobile nav right group — hidden on desktop */
+    .nav-mobile-right { display: none; align-items: center; gap: 0.6rem; }
     .nav-mobile-cta { display: none; }
+    .cart-mobile-btn {
+      background: none;
+      border: 1.5px solid var(--sand);
+      border-radius: 50px;
+      padding: 0.45rem 0.75rem;
+      cursor: pointer;
+      font-size: 1rem;
+      position: relative;
+      line-height: 1;
+      display: flex;
+      align-items: center;
+    }
 
     /* ── MOBILE ── */
     @media (max-width: 768px) {
@@ -1236,6 +1249,7 @@
       nav { padding: 0 5%; height: 62px; }
       .nav-links { display: none; }
       .nav-logo { font-size: 1.05rem; }
+      .nav-mobile-right { display: flex; }
       .nav-mobile-cta {
         display: inline-block;
         background: var(--bark);
@@ -1333,7 +1347,12 @@
       </li>
       <li><a href="#products" class="nav-cta">Order Now</a></li>
     </ul>
-    <a href="#products" class="nav-mobile-cta">Order Now</a>
+    <div class="nav-mobile-right">
+      <button class="cart-mobile-btn" onclick="openCart()">
+        🛍️ <span class="cart-badge" id="cartBadgeMobile">0</span>
+      </button>
+      <a href="#products" class="nav-mobile-cta">Order Now</a>
+    </div>
   </nav>
 
   <!-- Hero -->
@@ -2144,9 +2163,10 @@
 
     function updateCartBadge() {
       const count = cart.reduce((sum, i) => sum + i.qty, 0);
-      const badge = document.getElementById('cartBadge');
-      badge.textContent = count;
-      badge.style.display = count > 0 ? 'flex' : 'none';
+      ['cartBadge', 'cartBadgeMobile'].forEach(id => {
+        const badge = document.getElementById(id);
+        if (badge) { badge.textContent = count; badge.style.display = count > 0 ? 'flex' : 'none'; }
+      });
     }
 
     function openCart() {
