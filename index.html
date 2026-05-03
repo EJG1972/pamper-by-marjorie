@@ -909,8 +909,8 @@
 
     .cart-drawer {
       position: fixed;
-      top: 0; right: -440px;
-      width: 400px;
+      top: 0; right: -540px;
+      width: 500px;
       max-width: 100vw;
       height: 100vh;
       background: #fff;
@@ -1112,10 +1112,50 @@
     }
     .btn-continue-shopping:hover { background: var(--blush); color: var(--bark); }
 
-    /* Mobile two-step cart — hidden on desktop */
-    .cart-step-1 { display: none; }
-    .cart-back-link { display: none; }
-    .cart-place-order-btn { display: none; }
+    /* Two-step cart — works on both desktop and mobile */
+    .cart-step-1 { display: block; }
+    .cart-drawer.order-step .cart-step-1 { display: none; }
+
+    #cartForm { display: none; }
+    #cartTotalRow { display: none; }
+    #cartSendBtn { display: none !important; }
+    #cartEmailBtn { display: none !important; }
+    .cart-note { display: none; }
+
+    .cart-drawer.order-step #cartForm { display: block; }
+    .cart-drawer.order-step #cartTotalRow { display: flex; }
+    .cart-drawer.order-step #cartSendBtn { display: flex !important; }
+    .cart-drawer.order-step #cartEmailBtn { display: flex !important; }
+    .cart-drawer.order-step .cart-note { display: block; }
+
+    .cart-place-order-btn {
+      display: block;
+      width: 100%;
+      background: var(--bark);
+      color: #fff;
+      border: none;
+      padding: 1rem;
+      border-radius: 50px;
+      font-family: 'Montserrat', sans-serif;
+      font-size: 0.88rem;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      cursor: pointer;
+      margin-bottom: 0.5rem;
+      transition: background 0.2s;
+    }
+    .cart-place-order-btn:hover { background: var(--rose); }
+
+    .cart-back-link {
+      display: none;
+      font-size: 0.8rem;
+      color: var(--rose);
+      text-decoration: none;
+      font-weight: 600;
+      margin-bottom: 1rem;
+    }
+    .cart-drawer.order-step .cart-back-link { display: block; }
 
     /* ── CART FORM ── */
     .cart-form {
@@ -1348,43 +1388,7 @@
       .cart-total-amount { font-size: 1.7rem; }
       .cart-send-btn { font-size: 0.95rem; padding: 1.1rem; }
 
-      /* Two-step cart on mobile */
-      .cart-step-1 { display: block; }
-      #cartForm { display: none !important; }
-      #cartTotalRow { display: none; }
-      #cartSendBtn { display: none !important; }
-      #cartEmailBtn { display: none !important; }
-      .cart-note { display: none; }
-      .cart-drawer.order-step #cartForm { display: block !important; }
-      .cart-drawer.order-step #cartTotalRow { display: flex; }
-      .cart-drawer.order-step #cartSendBtn { display: flex !important; }
-      .cart-drawer.order-step #cartEmailBtn { display: flex !important; }
-      .cart-drawer.order-step .cart-note { display: block; }
-      .cart-drawer.order-step .cart-step-1 { display: none; }
-      .cart-back-link {
-        display: block;
-        font-size: 0.8rem;
-        color: var(--rose);
-        text-decoration: none;
-        font-weight: 600;
-        margin-bottom: 1rem;
-      }
-      .cart-place-order-btn {
-        display: block;
-        width: 100%;
-        background: var(--bark);
-        color: #fff;
-        border: none;
-        padding: 1rem;
-        border-radius: 50px;
-        font-family: 'Montserrat', sans-serif;
-        font-size: 0.9rem;
-        font-weight: 600;
-        letter-spacing: 0.08em;
-        text-transform: uppercase;
-        cursor: pointer;
-        margin-bottom: 0.5rem;
-      }
+      /* Two-step cart — mobile sizing only */
     }
   </style>
 </head>
@@ -2142,15 +2146,11 @@
       if (cart.length === 0) {
         container.innerHTML = `<div class="cart-empty"><div class="cart-empty-icon">🛍️</div><p>Your order list is empty.<br/>Browse the products and click<br/><strong>+ Add to Order</strong> on any item.</p></div>`;
         totalEl.textContent = 'R0';
-        sendBtn.style.display = 'none';
-        document.getElementById('cartEmailBtn').style.display = 'none';
-        document.getElementById('cartForm').style.display = 'none';
+        document.getElementById('cartDrawer').classList.remove('order-step');
         return;
       }
 
-      sendBtn.style.display = 'flex';
-      document.getElementById('cartEmailBtn').style.display = 'flex';
-      document.getElementById('cartForm').style.display = 'block';
+      // Display controlled by CSS via .order-step class — don't override here
       let total = 0;
       let html = '';
 
